@@ -14,7 +14,23 @@ public class ProdutoService {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	
-	public List<Produto> listar() {
+	public List<Produto> list() {
 		return produtoRepository.findAll();
+	}
+
+	public Produto find(Integer id) {
+		return produtoRepository.findOne(id);
+	}
+
+	public Produto insert(Produto obj) {
+		return produtoRepository.save(obj);
+	}
+
+	public Produto update(Produto obj) {
+		return produtoRepository.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		produtoRepository.delete(id);
 	}
 }
