@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
+import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -19,18 +20,25 @@ public class ProdutoService {
 	}
 
 	public Produto find(Integer id) {
-		return produtoRepository.findOne(id);
+		Produto obj = produtoRepository.findOne(id);
+		if (obj == null) {
+			throw new ObjectNotFoundException(Produto.class, id);
+		}
+		return obj;
 	}
 
 	public Produto insert(Produto obj) {
+		obj.setId(null);
 		return produtoRepository.save(obj);
 	}
 
 	public Produto update(Produto obj) {
+		find(obj.getId());
 		return produtoRepository.save(obj);
 	}
 	
 	public void delete(Integer id) {
+		find(id);
 		produtoRepository.delete(id);
 	}
 }
